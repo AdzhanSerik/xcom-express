@@ -17,12 +17,23 @@
     * {
         font-family: 'Open-Sans' sans-serif;
     }
+
+    /*Убрать полосу прокрутки у элемента*/
+    .element::-webkit-scrollbar {
+        width: 0;
+    }
+
+    /*Убрать полосу прокрутки для всей страницы*/
+    ::-webkit-scrollbar {
+        width: 0;
+    }
 </style>
 
 <body class="bg-black text-white relative h-screen">
     <div class="
         modal-post 
         absolute 
+        z-2
         top-[50%] 
         left-[50%] 
         translate-x-[-50%] 
@@ -38,6 +49,7 @@
         items-center 
         justify-center
         hidden
+        text
         ">
         <i class="close-modal fa-solid fa-circle-xmark text-3xl absolute top-4 right-4 cursor-pointer"></i>
 
@@ -100,31 +112,39 @@
                 <p>adzhan.serik@gmail.com</p>
             </div>
         </header>
-        <section class="main border border-white basis-[80%] p-2">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ullam ab amet illum neque veniam
-                officiis, aspernatur cupiditate nam omnis minus itaque sunt sint ut voluptatibus hic totam enim id.</p>
+        <section
+            class="main fixed top-20 left-90 right-40 h-[calc(100vh-80px)] overflow-y-auto p-2 gap-4 flex flex-col element">
+
+            <div class="border-slate-600 border rounded-xl">
+                <div class="lenta-user flex items-start gap-4 mt-[20px] px-6 py-4">
+                    <i class="fa-solid fa-user-tie text-5xl"></i>
+                    <div class="profile flex items-left flex-col">
+                        <p class="text-3xl">Dimash</p>
+                        <p class="text-slate-500">запостил</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-blue-400 text-3xl"></i>
+                </div>
+                <div class="lenta-body px-6 py-2 flex items-center text-justify text-2xl">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, dolore? Nesciunt fuga harum
+                        inventore corrupti expedita culpa, odit quod non consectetur eveniet cupiditate optio placeat
+                        at. Perferendis eum doloribus recusandae.</p>
+                </div>
+                <div class="users-stats flex text-xl items-center gap-2 p-5">
+                    <i class="fa-solid fa-heart text-red-600"></i>1000
+                    <i class="fa-solid fa-comment"></i>200
+                    <div class="flex items-end gap-2">
+                        <i class="fa-solid fa-bookmark text-yellow-500"></i>
+                    </div>
+                </div>
+                <div class="users-comment flex items-center p-5 gap-3">
+                    <input class="bg-white text-black w-[100%] placeholder:pl-1 p-3 rounded-full" type="text"
+                        placeholder="Комментарии..." name="" id="">
+                    <button
+                        class="hover:bg-gray-300 ease-in duration-300 cursor-pointer bg-white text-black rounded-full">Оставить
+                        коментарии</button>
+                </div>
+            </div>
+
         </section>
     </div>
 
