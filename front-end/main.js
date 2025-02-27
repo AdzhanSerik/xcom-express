@@ -15,14 +15,14 @@ document.addEventListener('click', (e) => {
 
 });
 
-document.querySelector('form').addEventListener('submit', (e) => {
+document.querySelector('form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.querySelector('.title').value;
     const text_post = document.querySelector('.text-post').value;
     const user_id = localStorage.getItem('user_id');
-    createPost(user_id, title, text_post);
+    await createPost(user_id, title, text_post);
     modal.classList.add("hidden");
-
+    await renderPosts()
 })
 
 async function createPost(user_id, title, text_post) {
@@ -42,3 +42,55 @@ async function createPost(user_id, title, text_post) {
         console.log(error)
     }
 }
+
+
+async function getAllPosts() {
+    try {
+        const response = await fetch('http://localhost:5000/api/postsRoutes/posts')
+        const posts = await response.json()
+        return posts
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function renderPosts() {
+    document.querySelector('.main').innerHTML = ''
+    const posts = await getAllPosts()
+    posts.forEach(post => {
+        document.querySelector('.main').insertAdjacentHTML('beforeend', `
+            <div class="border-slate-600 border rounded-xl">
+                <div class="lenta-user flex items-start gap-4 mt-[20px] px-6 py-4">
+                    <i class="fa-solid fa-user-tie text-5xl"></i>
+                    <div class="profile flex items-left flex-col">
+                        <p class="text-3xl">${post.users.email}</p>
+                        <p class="text-slate-500">Тут должно быть время</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-blue-400 text-3xl"></i>
+                </div>
+                <div class="lenta-body px-6 py-2 flex flex-col items-start text-justify text-2xl gap-3">
+                    <p class="font-bold">${post.title}</p>
+                    <p>${post.text_post}</p>
+                </div>
+                <div class="users-stats flex text-xl items-center gap-2 p-5">
+                    <i class="fa-solid fa-heart text-red-600"></i>0
+                    <i class="fa-solid fa-comment"></i>0
+                    <div class="flex items-end gap-2">
+                        <i class="fa-solid fa-bookmark text-yellow-500"></i>
+                    </div>
+                </div>
+                <div class="users-comment flex items-center p-5 gap-3">
+                    <input class="bg-white text-black w-[100%] placeholder:pl-1 p-3 rounded-full" type="text"
+                        placeholder="Комментарии..." name="" id="">
+                    <button
+                        class="hover:bg-gray-300 ease-in duration-300 cursor-pointer bg-white text-black rounded-full">Оставить
+                        коментарии</button>
+                </div>
+            </div>
+            `)
+    });
+
+
+}
+
+renderPosts()
