@@ -1,9 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const User = require("./usersModel"); // Импортируем модель User
+const Posts = require("./postsModel")
 
-const Posts = sequelize.define("Posts", {
-    post_id: {
+const Comments = sequelize.define("Comments", {
+    comment_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -16,20 +17,25 @@ const Posts = sequelize.define("Posts", {
             key: "id",
         },
     },
-    title: {
-        type: DataTypes.STRING(255),
+    post_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: Posts,
+            key: "post_id",
+        },
     },
-    text_post: {
+    comment_text: {
         type: DataTypes.TEXT,
         allowNull: false,
     }
 }, {
-    tableName: "posts"
+    tableName: "comments"
 });
 
-Posts.belongsTo(User, { foreignKey: "user_id", as: "users" });
-User.hasMany(Posts, { foreignKey: "user_id", as: "posts" });
+Comments.belongsTo(User, { foreignKey: "user_id", as: "users" });
+Comments.belongsTo(Posts, { foreignKey: "post_id", as: "posts" });
 
+// User.hasMany(Posts, { foreignKey: "user_id", as: "posts" });
 
-module.exports = Posts;
+module.exports = Comments;
