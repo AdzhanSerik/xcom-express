@@ -58,7 +58,7 @@ async function renderPosts() {
     document.querySelector('.main').innerHTML = ''
     const posts = await getAllPosts()
     posts.forEach(post => {
-        document.querySelector('.main').insertAdjacentHTML('beforeend', `
+        document.querySelector('.main').insertAdjacentHTML('afterbegin', `
             <div class="border-slate-600 border rounded-xl">
                 <div class="lenta-user flex items-start gap-4 mt-[20px] px-6 py-4">
                     <i class="fa-solid fa-user-tie text-5xl"></i>
