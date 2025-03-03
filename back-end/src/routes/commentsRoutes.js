@@ -1,7 +1,9 @@
 const express = require("express")
 const router = express.Router()
-const { getAllComments } = require("../controllers/commentsController")
+const { getAllComments, createComment } = require("../controllers/commentsController")
 
 router.get('/comments/', getAllComments)
+router.post('/comments/', createComment)
+
 
 module.exports = router

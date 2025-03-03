@@ -18,27 +18,24 @@ const getAllComments = async (req, res) => {
     }
 };
 
-// Создать новый пост
-// const createPost = async (req, res) => {
-//     try {
-//         const { user_id, title, text_post } = req.body;
-
-//         // Проверяем, существует ли пользователь
-//         const user = await User.findByPk(user_id);
-//         if (!user) {
-//             return res.status(404).json({ error: "Пользователь не найден" });
-//         }
-
-//         // Создаём новый пост
-//         const newPost = await Posts.create({ user_id, title, text_post });
-
-//         // Возвращаем созданный пост
-//         res.status(201).json(newPost);
-//     } catch (error) {
-//         console.error("Ошибка при создании поста:", error);
-//         res.status(500).json({ error: "Ошибка при создании поста" });
-//     }
-// };
+const createComment = async (req, res) => {
+    try {
+        const { user_id, post_id, comment_text } = req.body;
+        const user = await User.findByPk(user_id);
+        if (!user) {
+            return res.status(404).json({ error: "Пользователь не найден" });
+        }
+        const post = await Posts.findByPk(post_id)
+        if (!post) {
+            return res.status(404).json({ error: "Post не найден" });
+        }
+        const newComment = await Comments.create({ user_id, post_id, comment_text });
+        res.status(201).json(newComment);
+    } catch (error) {
+        console.error("Ошибка при создании comment:", error);
+        res.status(500).json({ error: "Ошибка при создании comment" });
+    }
+};
 
 
-module.exports = { getAllComments };
+module.exports = { getAllComments, createComment };

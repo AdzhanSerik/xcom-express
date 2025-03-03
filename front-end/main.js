@@ -8,6 +8,7 @@ document.querySelector(".post-btn").addEventListener("click", () => {
 const postBtn = document.querySelector(".post-btn");
 const modal = document.querySelector(".modal-post");
 const closeBtn = document.querySelector(".close-modal");
+const user_id = localStorage.getItem("user_id")
 document.addEventListener('click', (e) => {
     if (!modal.contains(e.target) && !postBtn.contains(e.target)) {
         modal.classList.add("hidden");
@@ -80,9 +81,10 @@ async function renderPosts() {
                     </div>
                 </div>
                 <div class="users-comment flex items-center p-5 gap-3">
-                    <input class="bg-white text-black w-[100%] placeholder:pl-1 p-3 rounded-full" type="text"
+                    <input data-id="${post.post_id}" class="bg-white text-black w-[100%] placeholder:pl-1 p-3 rounded-full" type="text"
                         placeholder="Комментарии..." name="" id="">
                     <button
+                        onClick="createCommentt('${post.post_id}', '${localStorage.getItem('user_id')}')"
                         class="hover:bg-gray-300 ease-in duration-300 cursor-pointer bg-white text-black rounded-full">Оставить
                         коментарии</button>
                 </div>
@@ -91,6 +93,22 @@ async function renderPosts() {
     });
 
 
+}
+
+async function createCommentt(post_id, user_id) {
+    const comment = document.querySelector(`[data-id="${post_id}"]`).value
+    await fetch('http://localhost:5000/api/commentsRoutes/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id,
+            post_id,
+            comment_text: comment
+        })
+    })
+    await renderPosts()
 }
 
 renderPosts()
