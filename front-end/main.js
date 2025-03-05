@@ -10,6 +10,9 @@ document.querySelector(".close-modal").addEventListener("click", () => {
 });
 
 document.querySelector(".post-btn").addEventListener("click", () => {
+    if (localStorage.getItem('user_id') == undefined || localStorage.getItem('user_id') == undefined) {
+        window.location.href = './index.html'
+    }
     document.querySelector(".modal-post").classList.remove("hidden");
 });
 
@@ -63,13 +66,14 @@ async function renderPosts() {
     document.querySelector('.main').innerHTML = ''
     const posts = await getAllPosts()
     posts.forEach(post => {
+        const dateTime = new Date(post.createdAt).toLocaleString()
         document.querySelector('.main').insertAdjacentHTML('afterbegin', `
             <div class="border-slate-600 border rounded-xl">
                 <div class="lenta-user flex items-start gap-4 mt-[20px] px-6 py-4">
                     <i class="fa-solid fa-user-tie text-5xl"></i>
                     <div class="profile flex items-left flex-col">
                         <p class="text-3xl">${post.users.email}</p>
-                        <p class="text-slate-500">Тут должно быть время</p>
+                        <p class="text-slate-500">${dateTime}</p>
                     </div>
                     <i class="fa-solid fa-circle-check text-blue-400 text-3xl"></i>
                 </div>
@@ -102,35 +106,59 @@ async function renderPosts() {
 }
 
 async function renderComments() {
-    const comments = await getAllComments()
-    const allPosts = document.querySelectorAll('.comments')
+    const comments = await getAllComments();
+    const allPosts = document.querySelectorAll('.comments');
 
     allPosts.forEach(item => {
-        console.log(item.getAttribute('data-idcomment'))
-        const filterComments = comments.filter(
-            comment => comment.post_id == item.getAttribute('data-idcomment')
-        )
-        console.log(filterComments)
-        filterComments.forEach(comment => {
-            const timeDate = new Date(comment.createdAt).toLocaleString()
-            item.insertAdjacentHTML('afterbegin', `
-                <div class="comment flex flex-col border-slate-600 border rounded-xl">
-                <div class="flex items-start gap-4 mt-[20px] px-6 py-4">
-                    <i class="fa-solid fa-user-tie text-5xl"></i>
-                    <div class="profile flex items-left flex-col">
-                        <p>${comment.users.email}</p>
-                        <p class="text-slate-500">${timeDate}</p>
+        const postId = item.getAttribute('data-idcomment');
+        const filterComments = comments.filter(comment => comment.post_id == postId);
+        const sortComments = filterComments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        item.innerHTML = "";
+
+        let mainComments = 1;
+        let moreButton = null;
+
+        function renderVisibleComments() {
+            item.innerHTML = "";
+
+            sortComments.slice(0, mainComments).forEach(comment => {
+                const timeDate = new Date(comment.createdAt).toLocaleString();
+                item.insertAdjacentHTML('beforeend', `
+                    <div class="comment flex flex-col border-slate-600 border-t-1">
+                        <div class="flex items-start gap-4 mt-[20px] px-6 py-4">
+                            <i class="fa-solid fa-user-tie text-5xl"></i>
+                            <div class="profile flex items-left flex-col">
+                                <p>${comment.users.email}</p>
+                                <p class="text-slate-500">${timeDate}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 mt-[20px] mb-[20px] px-6 ">
+                            <p>${comment.comment_text}</p>
+                        </div>
                     </div>
-                    <i class="fa-solid fa-circle-check text-blue-400 text-3xl"></i>
-                </div>
-                <div class="flex items-start gap-4 mt-[20px] mb-[20px] px-6 ">
-                    <p>${comment.comment_text}</p>
-                </div>
-                </div>
-                `)
-        })
-    })
+                `);
+            });
+
+            if (moreButton) {
+                moreButton.remove();
+            }
+
+            if (filterComments.length > mainComments) {
+                moreButton = document.createElement("button");
+                moreButton.textContent = "Еще";
+                moreButton.classList.add("more-comments-btn", "bg-none", "p-6", "text-blue-600", "cursor-pointer", "hover:text-blue-200", "ease-in", "duration-100");
+                moreButton.addEventListener("click", () => {
+                    mainComments += 3;
+                    renderVisibleComments();
+                });
+                item.appendChild(moreButton);
+            }
+        }
+
+        renderVisibleComments();
+    });
 }
+
 
 async function createCommentt(post_id, user_id) {
     const comment = document.querySelector(`[data-id="${post_id}"]`).value
@@ -165,3 +193,4 @@ async function renderAll() {
 }
 
 renderAll()
+
