@@ -83,7 +83,7 @@ async function renderPosts() {
                 </div>
                 <div class="users-stats flex text-xl items-center gap-2 p-5">
                     <i class="fa-solid fa-heart text-red-600"></i>0
-                    <i class="fa-solid fa-comment"></i>0
+                    <i class="comments-count fa-solid fa-comment"></i><span  data-comment="${post.post_id}">0</span>
                     <div class="flex items-end gap-2">
                         <i class="fa-solid fa-bookmark text-yellow-500"></i>
                     </div>
@@ -96,7 +96,9 @@ async function renderPosts() {
                         class="hover:bg-gray-300 ease-in duration-300 cursor-pointer bg-white text-black rounded-full">Оставить
                         коментарии</button>
                 </div>
+                <p class="font-bold text-2xl p-5">Комментарии</p>
                 <div class="comments" data-idcomment="${post.post_id}">
+                
                 </div>
             </div>
             `)
@@ -112,6 +114,7 @@ async function renderComments() {
     allPosts.forEach(item => {
         const postId = item.getAttribute('data-idcomment');
         const filterComments = comments.filter(comment => comment.post_id == postId);
+        document.querySelector(`[data-comment="${postId}"]`).innerHTML = filterComments.length
         const sortComments = filterComments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         item.innerHTML = "";
 
