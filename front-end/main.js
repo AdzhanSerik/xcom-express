@@ -110,10 +110,12 @@ async function renderComments() {
         console.log(item.getAttribute('data-idcomment'))
         const filterComments = comments.filter(comment => comment.post_id == item.getAttribute('data-idcomment'))
         console.log(filterComments)
+        filterComments.forEach(comment => {
+            item.insertAdjacentHTML('afterbegin', `
+                <p>${comment.comment_text}</p>
+                `)
+        })
     })
-
-
-
 }
 
 async function createCommentt(post_id, user_id) {
