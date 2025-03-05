@@ -1,3 +1,10 @@
+
+const postBtn = document.querySelector(".post-btn");
+const modal = document.querySelector(".modal-post");
+const closeBtn = document.querySelector(".close-modal");
+const user_id = localStorage.getItem("user_id")
+
+
 document.querySelector(".close-modal").addEventListener("click", () => {
     document.querySelector(".modal-post").classList.add("hidden");
 });
@@ -5,10 +12,7 @@ document.querySelector(".close-modal").addEventListener("click", () => {
 document.querySelector(".post-btn").addEventListener("click", () => {
     document.querySelector(".modal-post").classList.remove("hidden");
 });
-const postBtn = document.querySelector(".post-btn");
-const modal = document.querySelector(".modal-post");
-const closeBtn = document.querySelector(".close-modal");
-const user_id = localStorage.getItem("user_id")
+
 document.addEventListener('click', (e) => {
     if (!modal.contains(e.target) && !postBtn.contains(e.target)) {
         modal.classList.add("hidden");
@@ -44,7 +48,6 @@ async function createPost(user_id, title, text_post) {
     }
 }
 
-
 async function getAllPosts() {
     try {
         const response = await fetch('http://localhost:5000/api/postsRoutes/posts')
@@ -56,6 +59,7 @@ async function getAllPosts() {
 }
 
 async function renderPosts() {
+
     document.querySelector('.main').innerHTML = ''
     const posts = await getAllPosts()
     posts.forEach(post => {
@@ -88,9 +92,26 @@ async function renderPosts() {
                         class="hover:bg-gray-300 ease-in duration-300 cursor-pointer bg-white text-black rounded-full">Оставить
                         коментарии</button>
                 </div>
+                <div class="comments" data-idcomment="${post.post_id}">
+                </div>
             </div>
             `)
     });
+
+
+}
+
+async function renderComments() {
+    const comments = await getAllComments()
+    console.log(comments)
+    const allPosts = document.querySelectorAll('.comments')
+
+    allPosts.forEach(item => {
+        console.log(item.getAttribute('data-idcomment'))
+        const filterComments = comments.filter(comment => comment.post_id == item.getAttribute('data-idcomment'))
+
+    })
+
 
 
 }
@@ -115,14 +136,16 @@ async function getAllComments() {
     try {
         const response = await fetch('http://localhost:5000/api/commentsRoutes/comments')
         const comments = await response.json()
-        console.log(comments)
         return comments
     } catch (error) {
         console.log(error)
     }
-
 }
 
-getAllComments()
 
-renderPosts()
+async function renderAll() {
+    await renderPosts()
+    await renderComments()
+}
+
+renderAll()
