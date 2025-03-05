@@ -27,7 +27,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
     const user_id = localStorage.getItem('user_id');
     await createPost(user_id, title, text_post);
     modal.classList.add("hidden");
-    await renderPosts()
+    await renderAll()
 })
 
 async function createPost(user_id, title, text_post) {
@@ -103,16 +103,30 @@ async function renderPosts() {
 
 async function renderComments() {
     const comments = await getAllComments()
-    console.log(comments)
     const allPosts = document.querySelectorAll('.comments')
 
     allPosts.forEach(item => {
         console.log(item.getAttribute('data-idcomment'))
-        const filterComments = comments.filter(comment => comment.post_id == item.getAttribute('data-idcomment'))
+        const filterComments = comments.filter(
+            comment => comment.post_id == item.getAttribute('data-idcomment')
+        )
         console.log(filterComments)
         filterComments.forEach(comment => {
+            const timeDate = new Date(comment.createdAt).toLocaleString()
             item.insertAdjacentHTML('afterbegin', `
-                <p>${comment.comment_text}</p>
+                <div class="comment flex flex-col border-slate-600 border rounded-xl">
+                <div class="flex items-start gap-4 mt-[20px] px-6 py-4">
+                    <i class="fa-solid fa-user-tie text-5xl"></i>
+                    <div class="profile flex items-left flex-col">
+                        <p>${comment.users.email}</p>
+                        <p class="text-slate-500">${timeDate}</p>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-blue-400 text-3xl"></i>
+                </div>
+                <div class="flex items-start gap-4 mt-[20px] mb-[20px] px-6 ">
+                    <p>${comment.comment_text}</p>
+                </div>
+                </div>
                 `)
         })
     })
@@ -131,7 +145,7 @@ async function createCommentt(post_id, user_id) {
             comment_text: comment
         })
     })
-    await renderPosts()
+    await renderAll()
 }
 
 async function getAllComments() {
