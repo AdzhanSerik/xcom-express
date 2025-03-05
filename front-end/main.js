@@ -109,7 +109,7 @@ async function renderComments() {
     allPosts.forEach(item => {
         console.log(item.getAttribute('data-idcomment'))
         const filterComments = comments.filter(comment => comment.post_id == item.getAttribute('data-idcomment'))
-
+        console.log(filterComments)
     })
 
 
