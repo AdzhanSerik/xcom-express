@@ -111,4 +111,18 @@ async function createCommentt(post_id, user_id) {
     await renderPosts()
 }
 
+async function getAllComments() {
+    try {
+        const response = await fetch('http://localhost:5000/api/commentsRoutes/comments')
+        const comments = await response.json()
+        console.log(comments)
+        return comments
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+getAllComments()
+
 renderPosts()
