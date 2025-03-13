@@ -5,6 +5,7 @@ const cors = require('cors')
 const userRoutes = require('./src/routes/userRoutes')
 const postsRoutes = require('./src/routes/postsRoutes')
 const commentsRoutes = require('./src/routes/commentsRoutes')
+const likesRoutes = require('./src/routes/likesRoutes')
 
 const app = express()
 
@@ -12,8 +13,9 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/api/userRoutes', userRoutes)
-app.use('/api/postsRoutes', postsRoutes)
 app.use('/api/commentsRoutes', commentsRoutes)
+app.use('/api/postsRoutes', postsRoutes)
+app.use('/api/likesRoutes', likesRoutes)
 
 const PORT = process.env.PORT || 3000
 
@@ -33,6 +35,5 @@ const start = async () => {
     }
 }
 start()
-
 
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="icon" href="./img/svg/Frame.svg">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/109388adc7.js" crossorigin="anonymous"></script>
     <script src="main.js" defer></script>
     <title>Главная</title>
@@ -105,18 +106,23 @@
                 </ul>
             </nav>
             <div class="btn-post flex items-center justify-center">
-                <button class="post-btn bg-white text-black px-5 py-2 rounded-full w-[100%]">POST</button>
+                <button
+                    class="post-btn bg-white hover:bg-gray-400 ease-in duration-300 cursor-pointer text-black px-5 py-2 rounded-full w-[100%]">Пост</button>
             </div>
-            <div class="profile">
-                <p>Serikbolsyn</p>
-                <p>adzhan.serik@gmail.com</p>
+            <div class="flex items-center justify-center">
+                <button
+                    class="login-btn bg-white hover:bg-green-400 ease-in duration-300 cursor-pointer text-black px-5 py-2 rounded-full w-[100%]">Войти</button>
+            </div>
+            <div class="flex items-center justify-center">
+                <button
+                    class="logout-btn bg-white hover:bg-red-700 ease-in duration-300 cursor-pointer mt-[-20px] text-black px-5 py-2 rounded-full w-[100%]">Выйти</button>
+            </div>
+            <div class="profile text-white">
+
             </div>
         </header>
         <section
             class="main fixed top-20 left-90 right-40 h-[calc(100vh-80px)] overflow-y-auto p-2 gap-4 flex flex-col element">
-
-
-
         </section>
     </div>
 

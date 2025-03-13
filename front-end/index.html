@@ -8,6 +8,7 @@
   <link rel="icon" href="./img/svg/Frame.svg">
   <title>Вход</title>
   <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./script.js" defer></script>
 </head>
 
@@ -27,8 +28,6 @@
           <span class="log">Войти</span>
           <span class="reg">Зарегистрироваться</span>
         </div>
-
-
       </div>
     </div>
   </head>
@@ -40,16 +39,18 @@
         <div class="logo">РЕГИСТРАЦИЯ</div>
       </div>
     </div>
-    <div class="iner">
-      <input class="name-user" type="text" placeholder="Имя" />
-      <input class="email" type="text" placeholder="Email" />
-      <input class="password" type="password" placeholder="Пароль" />
-    </div>
-    <div class="data">
-      <span></span>
-      <span></span>
-      <span class="btn register-btn">Далее</span>
-    </div>
+    <form id="reg-form">
+      <div class="iner">
+        <input class="name-user" type="text" placeholder="Имя" required />
+        <input class="email" type="email" placeholder="Email" required />
+        <input class="password" type="password" placeholder="Пароль" required />
+        <input class="confirm-password" type="password" placeholder="Введите ещё раз пароль" required />
+      </div>
+
+      <div class="data">
+        <button type="submit" class="btn register-btn">Регистрация</button>
+      </div>
+    </form>
   </div>
   <div class="div2">
     <div class="first">
@@ -59,15 +60,15 @@
         <div class="logo">Авторизация</div>
       </div>
     </div>
-    <div class="iner">
-      <input class="email2" type="text" placeholder="Email" />
-      <input class="password2" type="password" placeholder="Пароль" />
-    </div>
-    <div class="data">
-      <span></span>
-      <span></span>
-      <span class="btn login-btn">Авторизоваться</span>
-    </div>
+    <form id="login-form">
+      <div class="iner">
+        <input class="email2" type="email" placeholder="Email" required />
+        <input class="password2" type="password" placeholder="Пароль" required />
+      </div>
+      <div class="data">
+        <button type="submit" class="btn login-btn">Авторизоваться</button>
+      </div>
+    </form>
   </div>
 </body>
 
